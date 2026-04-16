@@ -1,43 +1,56 @@
 name: Build Geode Mod
 
 on:
+  workflow_dispatch:
   push:
-  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: Windows
+            os: windows-latest
+            build-type: RelWithDebInfo
+            target: Win64
+
+          - name: Android32
+            os: ubuntu-latest
+            target: Android32
+
+          - name: Android64
+            os: ubuntu-latest
+            target: Android64
+
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake ninja-build git python3 curl
-
-      - name: Clone Geode mod template (IMPORTANT FIX)
-        run: |
-          git clone --recursive https://github.com/geode-sdk/mods-template.git geode-mod
-
-      - name: Move project into template
-        run: |
-          cp -r . geode-mod/mods/NoOrbsMod
-
-      - name: Configure CMake with Geode toolchain
-        run: |
-          cmake -B geode-mod/build -G Ninja \
-            -S geode-mod \
-            -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build mod
-        run: |
-          cmake --build geode-mod/build
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        if: always()
+      - name: Build the mod
+        uses: geode-sdk/build-geode-mod@main
         with:
-          name: NoOrbsMod
-          path: geode-mod/build/*
+          bindings: geode-sdk/bindings
+          bindings-ref: main
+          build-config: ${{ matrix.config.build-type || 'Release' }}
+          export-pdb: true
+          combine: true
+          target: ${{ matrix.config.target }}
+
+  package:
+    name: Package builds
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - uses: geode-sdk/build-geode-mod/combine@main
+        id: build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Build Output
+          path: ${{ steps.build.outputs.build-output }}
