@@ -15,26 +15,29 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build git wget unzip build-essential
+          sudo apt-get install -y cmake ninja-build git python3 curl
 
-      - name: Clone Geode SDK
+      - name: Clone Geode mod template (IMPORTANT FIX)
         run: |
-          git clone --recursive https://github.com/geode-sdk/geode.git geode-sdk
+          git clone --recursive https://github.com/geode-sdk/mods-template.git geode-mod
 
-      - name: Configure CMake
+      - name: Move project into template
         run: |
-          cmake -B build -G Ninja \
-            -DGEODE_SDK=geode-sdk \
+          cp -r . geode-mod/mods/NoOrbsMod
+
+      - name: Configure CMake with Geode toolchain
+        run: |
+          cmake -B geode-mod/build -G Ninja \
+            -S geode-mod \
             -DCMAKE_BUILD_TYPE=Release
 
       - name: Build mod
         run: |
-          cmake --build build
+          cmake --build geode-mod/build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: GeodeMod
-          path: |
-            build/
+          name: NoOrbsMod
+          path: geode-mod/build/*
