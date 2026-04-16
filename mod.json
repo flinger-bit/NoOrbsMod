@@ -1,8 +1,15 @@
 {
-    "geode": "3.9.3",
-    "id": "neuru.noorbs",
-    "name": "No Orbs Mod",
-    "version": "1.0.0",
-    "developer": "Neuru",
-    "description": "Completely disables orb rewards in Geometry Dash"
+  "geode": "3.9.3",
+  "gd": {
+    "win": "*",
+    "android": "*",
+    "mac": "*",
+    "ios": "*"
+  },
+  "id": "neuru.noorbs",
+  "name": "No Orbs Mod",
+  "version": "1.0.0",
+  "developer": "flinger-bit",
+  "description": "Blocks orb/ring jumps",
+  "tags": ["gameplay", "bugfix"]
 }
