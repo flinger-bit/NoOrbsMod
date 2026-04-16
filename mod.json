@@ -1,0 +1,8 @@
+{
+    "geode": "4.0.0",
+    "id": "neuru.noorbs",
+    "name": "No Orbs Mod",
+    "version": "1.0.0",
+    "developer": "Neuru",
+    "description": "Completely disables orb rewards in Geometry Dash"
+}
