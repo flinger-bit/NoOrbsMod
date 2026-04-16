@@ -1,4 +1,4 @@
-name: Geode Mod Debug Build
+name: Build Geode Mod
 
 on:
   push:
@@ -8,84 +8,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      ACTIONS_RUNNER_DEBUG: true
-      ACTIONS_STEP_DEBUG: true
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: System info
+      - name: Install dependencies
         run: |
-          set -x
-          uname -a
-          whoami
-          pwd
-          echo "HOME=$HOME"
-          echo "PATH=$PATH"
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build git python3
 
-      - name: Install dependencies (verbose)
+      - name: Clone build system oficial
         run: |
-          set -euxo pipefail
-          sudo apt-get update -y
-          sudo apt-get install -y cmake ninja-build git wget curl unzip
+          git clone https://github.com/geode-sdk/build-geode-mod.git
 
-      - name: Show disk + env
+      - name: Configure mod build
         run: |
-          set -euxo pipefail
-          df -h
-          env
+          python3 build-geode-mod/build.py configure .
 
-      - name: Attempt Geode CLI install (DEBUG MODE)
+      - name: Build mod
         run: |
-          set -euxo pipefail
+          python3 build-geode-mod/build.py build .
 
-          echo "Downloading installer..."
-          curl -v https://geode-sdk.org/install.sh -o install.sh
-
-          echo "Running installer..."
-          bash -x install.sh || true
-
-          echo "Checking install output..."
-          ls -R $HOME || true
-          ls -R $HOME/.local || true
-          ls -R $HOME/.local/bin || true
-
-      - name: Force PATH inspection
-        run: |
-          set -euxo pipefail
-          echo "Before PATH fix: $PATH"
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          echo "After PATH fix: $PATH"
-
-      - name: Locate geode binary (FULL SEARCH)
-        run: |
-          set -euxo pipefail
-
-          echo "Searching system for geode..."
-          find $HOME -name "geode" -type f || true
-          find / -name "geode" -type f 2>/dev/null || true
-
-      - name: Verify geode (NO HIDING ERRORS)
-        run: |
-          set -euxo pipefail
-
-          which geode || true
-          geode --version
-          geode sdk install
-          geode build configure
-
-      - name: Build mod (FULL OUTPUT)
-        run: |
-          set -euxo pipefail
-          geode build build
-
-      - name: Upload artifacts (even if broken)
-        if: always()
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: debug-build-output
+          name: GeodeMod
           path: |
             build/
-            **/*.log
+            **/*.geode
+            **/*.so
+            **/*.dll
