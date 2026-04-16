@@ -12,26 +12,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake ninja-build git wget unzip
 
-      - name: Install Geode CLI
+      - name: Download Geode CLI (FIXED VERSION)
         run: |
-          wget https://github.com/geode-sdk/cli/releases/latest/download/geode-cli-linux
+          wget https://github.com/geode-sdk/cli/releases/download/v3.7.3/geode-cli-linux
           chmod +x geode-cli-linux
           sudo mv geode-cli-linux /usr/local/bin/geode
 
-      - name: Setup Geode SDK
+      - name: Setup SDK
         run: |
           geode sdk install
 
-      - name: Configure project
+      - name: Configure
         run: |
           geode build configure
 
-      - name: Build mod
+      - name: Build
         run: |
           geode build build
 
