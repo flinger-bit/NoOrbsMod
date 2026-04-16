@@ -17,24 +17,27 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cmake ninja-build git curl
 
-      - name: Install Geode CLI (OFFICIAL METHOD)
+      - name: Install Geode CLI
         run: |
           curl -fsSL https://geode-sdk.org/install.sh | bash
+
+      - name: Add Geode to PATH
+        run: |
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Verify CLI
         run: |
           geode --version
 
-      - name: Setup SDK
+      - name: Install SDK
         run: |
           geode sdk install
 
-      - name: Configure project
+      - name: Configure
         run: |
           geode build configure
 
-      - name: Build mod
+      - name: Build
         run: |
           geode build build
 
