@@ -15,23 +15,28 @@ jobs:
       - name: Setup dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake ninja-build git
+          sudo apt-get install -y cmake ninja-build git wget unzip
 
-      - name: Clone Geode SDK
+      - name: Install Geode CLI
         run: |
-          git clone --recursive https://github.com/geode-sdk/geode.git
+          wget https://github.com/geode-sdk/cli/releases/latest/download/geode-cli-linux
+          chmod +x geode-cli-linux
+          sudo mv geode-cli-linux /usr/local/bin/geode
 
-      - name: Configure
+      - name: Setup Geode SDK
         run: |
-          cmake -B build -G Ninja \
-            -DGEODE_SDK=geode
+          geode sdk install
 
-      - name: Build
+      - name: Configure project
         run: |
-          cmake --build build
+          geode build configure
+
+      - name: Build mod
+        run: |
+          geode build build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: NoOrbsMod
-          path: build/*.so
+          path: build/*
