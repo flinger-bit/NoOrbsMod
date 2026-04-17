@@ -10,6 +10,6 @@
   "name": "No Orbs Mod",
   "version": "1.0.0",
   "developer": "flinger-bit",
-  "description": "Disables all ring/orb jumps in levels. Compatible with xdbot.",
+  "description": "Awards 0 mana orbs (shop currency) when completing any level. Compatible with xdbot.",
   "tags": ["gameplay", "bugfix"]
 }

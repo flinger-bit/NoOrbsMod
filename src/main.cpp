@@ -1,12 +1,11 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/PlayerObject.hpp>
+#include <Geode/modify/GameStatsManager.hpp>
 
 using namespace geode::prelude;
 
-class $modify(NoOrbsMod, PlayerObject) {
-
-    void ringJump(RingObject* ring, bool invert) {
-        // Block all ring/orb jumps completely
-        // Original is intentionally not called
+class $modify(NoOrbsMod, GameStatsManager) {
+    void awardCurrencyForLevel(GJGameLevel* level) {
+        // Block mana orb (currency) awards on level completion
+        // By not calling the original, 0 orbs are given per level
     }
 };
