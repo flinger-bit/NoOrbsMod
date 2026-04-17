@@ -8,40 +8,22 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - name: Windows
-            os: windows-latest
-            build-type: RelWithDebInfo
-            target: Win64
-
-          - name: Android32
-            os: ubuntu-latest
-            target: Android32
-
-          - name: Android64
-            os: ubuntu-latest
-            target: Android64
-
-    name: ${{ matrix.config.name }}
-    runs-on: ${{ matrix.config.os }}
+    name: Android64
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build the mod
-        uses: geode-sdk/build-geode-mod@main
+        uses: geode-sdk/build-geode-mod@v1
         with:
           sdk: 3.9.3
           cli: latest
           bindings: geode-sdk/bindings
           bindings-ref: main
-          build-config: ${{ matrix.config.build-type || 'Release' }}
-          export-pdb: true
+          build-config: Release
           combine: true
-          target: ${{ matrix.config.target }}
+          target: Android64
 
   package:
     name: Package builds
@@ -49,7 +31,7 @@ jobs:
     needs: [build]
 
     steps:
-      - uses: geode-sdk/build-geode-mod/combine@main
+      - uses: geode-sdk/build-geode-mod/combine@v1
         id: build
 
       - uses: actions/upload-artifact@v4
