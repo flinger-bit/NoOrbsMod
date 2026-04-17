@@ -27,7 +27,7 @@ jobs:
           sdk: 3.9.3
           cli: latest
           bindings: geode-sdk/bindings
-          bindings-ref: f79cf82866f4
+          bindings-ref: f79cf82866f46f9205f82e48d4c6f0e44c3222f0
           build-config: Release
           combine: true
           target: Android64
