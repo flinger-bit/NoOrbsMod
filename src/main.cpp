@@ -1,13 +1,12 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/GameLevelManager.hpp>
+#include <Geode/modify/PlayerObject.hpp>
 
 using namespace geode::prelude;
 
-class $modify(NoOrbs, GameLevelManager) {
+class $modify(NoOrbsMod, PlayerObject) {
 
-    int getRewardForLevel(GJGameLevel* level, bool secretCoin, bool dailyLevel, bool gauntlet) {
-
-        // Bloquea completamente las orbes
-        return 0;
+    void ringJump(RingObject* ring, bool invert) {
+        // Block all ring/orb jumps completely
+        // Original is intentionally not called
     }
 };

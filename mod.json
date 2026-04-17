@@ -1,15 +1,15 @@
 {
   "geode": "3.9.3",
   "gd": {
-    "win": "*",
-    "android": "*",
-    "mac": "*",
-    "ios": "*"
+    "win": "2.206",
+    "android": "2.206",
+    "mac": "2.206",
+    "ios": "2.206"
   },
   "id": "neuru.noorbs",
   "name": "No Orbs Mod",
   "version": "1.0.0",
   "developer": "flinger-bit",
-  "description": "Blocks orb/ring jumps",
+  "description": "Disables all ring/orb jumps in levels. Compatible with xdbot.",
   "tags": ["gameplay", "bugfix"]
 }

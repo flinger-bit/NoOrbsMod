@@ -140,16 +140,16 @@
     </div>
 
     <div class="description">
-      Blocks orb/ring jumps in Geometry Dash by overriding the reward system.
-      The mod hooks into <code>GameLevelManager</code> to return 0 rewards for
-      all levels, effectively disabling orb progression.
+      Disables all ring/orb jumps in Geometry Dash levels by hooking into
+      <code>PlayerObject::ringJump</code>. When the player touches a ring,
+      no jump is triggered — giving tools like <strong>xdbot</strong> full
+      control over all player inputs.
     </div>
 
     <div class="code-block">
-class $modify(NoOrbs, GameLevelManager) {<br>
-&nbsp;&nbsp;int getRewardForLevel(...) {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;// Bloquea completamente las orbes<br>
-&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+class $modify(NoOrbsMod, PlayerObject) {<br>
+&nbsp;&nbsp;void ringJump(RingObject* ring, bool invert) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// Block all ring/orb jumps completely<br>
 &nbsp;&nbsp;}<br>
 };
     </div>
@@ -164,10 +164,9 @@ class $modify(NoOrbs, GameLevelManager) {<br>
     </div>
 
     <div class="note">
-      This is a <strong>C++ game mod</strong> for Geometry Dash using the Geode SDK.
-      To build it, you need the Geode SDK installed and CMake 3.21+.
-      Set the <code>GEODE_SDK</code> environment variable and run
-      <code>cmake -B build && cmake --build build</code>.
+      This is a <strong>C++ game mod</strong> for <strong>Geometry Dash 2.206</strong> using Geode SDK 3.9.3.
+      The GitHub Actions workflow builds a <code>.geode</code> file automatically on every push to <code>main</code>.
+      The SDK is pinned to <strong>3.9.3</strong> in the workflow to match <code>mod.json</code>.
     </div>
   </div>
 </body>
