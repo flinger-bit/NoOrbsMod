@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>No Orbs Mod - Geometry Dash</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: #16213e;
+      border: 2px solid #e94560;
+      border-radius: 16px;
+      max-width: 640px;
+      width: 100%;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(233, 69, 96, 0.2);
+    }
+    .badge {
+      display: inline-block;
+      background: #e94560;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .subtitle {
+      color: #aaa;
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .info-item {
+      background: #0f3460;
+      border-radius: 10px;
+      padding: 14px 18px;
+    }
+    .info-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .info-value {
+      font-size: 1rem;
+      color: #fff;
+      font-weight: 600;
+    }
+    .description {
+      background: #0f3460;
+      border-left: 4px solid #e94560;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+      color: #ccc;
+    }
+    .code-block {
+      background: #0a0a1a;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: #a8ff78;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: #0f3460;
+      border: 1px solid #e94560;
+      color: #e94560;
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+    }
+    .note {
+      margin-top: 24px;
+      padding: 14px 18px;
+      background: rgba(233, 69, 96, 0.1);
+      border: 1px solid rgba(233, 69, 96, 0.3);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: #aaa;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">Geode Mod</span>
+    <h1>No Orbs Mod</h1>
+    <p class="subtitle">A Geometry Dash modification by <strong>flinger-bit</strong></p>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">Mod ID</div>
+        <div class="info-value">neuru.noorbs</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Version</div>
+        <div class="info-value">1.0.0</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Geode SDK</div>
+        <div class="info-value">3.9.3</div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Language</div>
+        <div class="info-value">C++20</div>
+      </div>
+    </div>
+
+    <div class="description">
+      Blocks orb/ring jumps in Geometry Dash by overriding the reward system.
+      The mod hooks into <code>GameLevelManager</code> to return 0 rewards for
+      all levels, effectively disabling orb progression.
+    </div>
+
+    <div class="code-block">
+class $modify(NoOrbs, GameLevelManager) {<br>
+&nbsp;&nbsp;int getRewardForLevel(...) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;// Bloquea completamente las orbes<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+&nbsp;&nbsp;}<br>
+};
+    </div>
+
+    <div class="tags">
+      <span class="tag">gameplay</span>
+      <span class="tag">bugfix</span>
+      <span class="tag">Windows</span>
+      <span class="tag">Android</span>
+      <span class="tag">Mac</span>
+      <span class="tag">iOS</span>
+    </div>
+
+    <div class="note">
+      This is a <strong>C++ game mod</strong> for Geometry Dash using the Geode SDK.
+      To build it, you need the Geode SDK installed and CMake 3.21+.
+      Set the <code>GEODE_SDK</code> environment variable and run
+      <code>cmake -B build && cmake --build build</code>.
+    </div>
+  </div>
+</body>
+</html>
