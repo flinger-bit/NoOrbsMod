@@ -9,10 +9,17 @@ on:
 jobs:
   build:
     name: Android64
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install NDK r25c (Clang 14, compatible with Geode 3.9.3)
+        run: |
+          wget -q "https://dl.google.com/android/repository/android-ndk-r25c-linux.zip" -O ndk.zip
+          unzip -q ndk.zip -d "$HOME"
+          echo "ANDROID_NDK_LATEST_HOME=$HOME/android-ndk-r25c" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_HOME=$HOME/android-ndk-r25c" >> "$GITHUB_ENV"
 
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
