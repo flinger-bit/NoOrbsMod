@@ -12,6 +12,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         print(f"[{self.address_string()}] {format % args}")
 
+socketserver.TCPServer.allow_reuse_address = True
 with socketserver.TCPServer(("0.0.0.0", PORT), Handler) as httpd:
     print(f"Serving on http://0.0.0.0:{PORT}")
     httpd.serve_forever()
